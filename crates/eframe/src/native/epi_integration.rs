@@ -181,6 +181,7 @@ pub fn handle_app_output(
         visible: _, // handled in post_present
         always_on_top,
         focus_window,
+        minimized,
     } = app_output;
 
     if let Some(decorated) = decorated {
@@ -199,6 +200,10 @@ pub fn handle_app_output(
 
     if focus_window {
         window.focus_window();
+    }
+
+    if let Some(minimized) = minimized {
+        window.set_minimized(minimized);
     }
 
     if let Some(fullscreen) = fullscreen {

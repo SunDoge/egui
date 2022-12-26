@@ -794,6 +794,11 @@ impl Frame {
         self.output.focus_window = true;
     }
 
+    #[cfg(not(target_arch = "wasm32"))]
+    pub fn set_minimized(&mut self, minimized: bool) {
+        self.output.minimized = Some(minimized);
+    }
+
     /// for integrations only: call once per frame
     pub(crate) fn take_app_output(&mut self) -> backend::AppOutput {
         std::mem::take(&mut self.output)
@@ -1010,5 +1015,8 @@ pub(crate) mod backend {
 
         #[cfg(not(target_arch = "wasm32"))]
         pub focus_window: bool,
+
+        #[cfg(not(target_arch = "wasm32"))]
+        pub minimized: Option<bool>,
     }
 }
