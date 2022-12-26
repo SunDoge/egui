@@ -789,6 +789,11 @@ impl Frame {
         }
     }
 
+    #[cfg(not(target_arch = "wasm32"))]
+    pub fn focus_window(&mut self) {
+        self.output.focus_window = true;
+    }
+
     /// for integrations only: call once per frame
     pub(crate) fn take_app_output(&mut self) -> backend::AppOutput {
         std::mem::take(&mut self.output)
@@ -1002,5 +1007,8 @@ pub(crate) mod backend {
         /// Set to some bool to tell the window always on top.
         #[cfg(not(target_arch = "wasm32"))]
         pub always_on_top: Option<bool>,
+
+        #[cfg(not(target_arch = "wasm32"))]
+        pub focus_window: bool,
     }
 }

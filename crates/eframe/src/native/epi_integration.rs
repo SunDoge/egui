@@ -180,6 +180,7 @@ pub fn handle_app_output(
         window_pos,
         visible: _, // handled in post_present
         always_on_top,
+        focus_window,
     } = app_output;
 
     if let Some(decorated) = decorated {
@@ -194,6 +195,10 @@ pub fn handle_app_output(
             }
             .to_logical::<f32>(native_pixels_per_point(window) as f64),
         );
+    }
+
+    if focus_window {
+        window.focus_window();
     }
 
     if let Some(fullscreen) = fullscreen {
